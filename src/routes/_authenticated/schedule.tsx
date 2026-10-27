@@ -6,9 +6,13 @@ import { toast } from "sonner";
 import type { EventType } from "@/lib/data";
 import { eventsQuery, formatSize, materialUrl, subjectsQuery } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 import { translate, useI18n } from "@/lib/i18n";
 
-async function openFile(path: string) {
+async function openFile(path: string, eventId: string, materialId: string) {
+  void supabase.from("material_opens").insert({ event_id: eventId, material_id: materialId }).then(({ error }) => {
+    if (error) console.error("Logging file open failed:", error.message);
+  });
   const win = window.open("", "_blank");
   try {
     const url = await materialUrl(path);
@@ -162,7 +166,7 @@ function SchedulePage() {
                 {e.materials.length > 0 && (
                   <div className="mt-3 space-y-1.5 border-t pt-3">
                     {e.materials.map((m) => (
-                      <button key={m.id} onClick={() => openFile(m.file_path)} className="flex w-full items-center gap-2 rounded-lg bg-secondary/60 px-3 py-2 text-start text-sm hover:bg-secondary">
+                      <button key={m.id} onClick={() => openFile(m.file_path, e.id, m.id)} className="flex w-full items-center gap-2 rounded-lg bg-secondary/60 px-3 py-2 text-start text-sm hover:bg-secondary">
                         <Paperclip className="h-4 w-4 shrink-0 text-primary" />
                         <span className="min-w-0 flex-1 truncate font-medium">{m.title}</span>
                         <span className="text-[11px] text-muted-foreground">{formatSize(m.size_bytes)}</span>
