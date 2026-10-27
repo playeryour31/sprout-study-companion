@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { Loader2, Sparkles, BookCheck, ListChecks } from "lucide-react";
 import { SubjectIcon } from "@/components/app/SubjectIcon";
 import { useSuspenseQuery } from "@tanstack/react-query";
