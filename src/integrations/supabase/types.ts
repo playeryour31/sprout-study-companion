@@ -59,6 +59,7 @@ export type Database = {
         Row: {
           body: string
           created_at: string
+          event_id: string | null
           id: string
           kind: string
           title: string
@@ -66,6 +67,7 @@ export type Database = {
         Insert: {
           body?: string
           created_at?: string
+          event_id?: string | null
           id?: string
           kind?: string
           title: string
@@ -73,11 +75,20 @@ export type Database = {
         Update: {
           body?: string
           created_at?: string
+          event_id?: string | null
           id?: string
           kind?: string
           title?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "announcements_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       events: {
         Row: {
@@ -219,6 +230,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          id: string
+          lang: string
+          p256dh: string
+          time_zone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          lang?: string
+          p256dh: string
+          time_zone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          lang?: string
+          p256dh?: string
+          time_zone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       quiz_attempts: {
         Row: {
