@@ -16,7 +16,7 @@ async function openFile(path: string) {
     else window.location.href = url;
   } catch {
     win?.close();
-    toast.error(translate("Couldn't open the file. Please try again."));
+    toast.error(translate("Couldn't open this file. Try again."));
   }
 }
 
