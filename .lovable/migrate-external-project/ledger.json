@@ -1,0 +1,89 @@
+{
+  "source": "github:omgmono405/sprout-study-companion",
+  "capabilities": [
+    {
+      "capability": "code",
+      "source": "TanStack Start app (pages, admin, components, lib)",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": ""
+    },
+    {
+      "capability": "schema",
+      "source": "drizzle/migrations 0000, 0001 (10 tables, is_admin function, storage policies)",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": ""
+    },
+    {
+      "capability": "records",
+      "source": "Old Cloud database (subjects, lessons, quizzes, events, announcements, progress)",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "Request data export from the old project (More \u2192 Database \u2192 Manage \u2192 Settings \u2192 Export data)"
+    },
+    {
+      "capability": "auth identities",
+      "source": "Google sign-in via Lovable Cloud",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "Google sign-in enabled; verify once a real user signs in"
+    },
+    {
+      "capability": "authorization",
+      "source": "admin_emails table + is_admin() RLS",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "Need the first admin email from the user"
+    },
+    {
+      "capability": "uploaded file bytes",
+      "source": "storage bucket 'materials'",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "Private bucket created; lesson files must be re-uploaded"
+    },
+    {
+      "capability": "AI study plan",
+      "source": "Lovable AI Gateway via LOVABLE_API_KEY",
+      "outcome": "preserve",
+      "status": "verified",
+      "next_action": ""
+    },
+    {
+      "capability": "offline PWA",
+      "source": "vite-plugin-pwa",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": ""
+    },
+    {
+      "capability": "public endpoints / webhooks / schedules",
+      "source": "none detected",
+      "outcome": "n/a",
+      "status": "verified",
+      "next_action": ""
+    },
+    {
+      "capability": "secrets",
+      "source": "LOVABLE_API_KEY only",
+      "outcome": "preserve",
+      "status": "verified",
+      "next_action": ""
+    },
+    {
+      "capability": "verification",
+      "source": "",
+      "outcome": "verify",
+      "status": "pending",
+      "next_action": "Signed-in flow untested: no users exist yet"
+    },
+    {
+      "capability": "push notifications",
+      "source": "Web Push via VAPID_SEED",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "New VAPID_SEED generated; devices must re-subscribe"
+    }
+  ]
+}
