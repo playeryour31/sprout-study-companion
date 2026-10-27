@@ -226,6 +226,45 @@ export type Database = {
           },
         ]
       }
+      material_opens: {
+        Row: {
+          event_id: string
+          id: string
+          material_id: string
+          opened_at: string
+          user_id: string
+        }
+        Insert: {
+          event_id: string
+          id?: string
+          material_id: string
+          opened_at?: string
+          user_id?: string
+        }
+        Update: {
+          event_id?: string
+          id?: string
+          material_id?: string
+          opened_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "material_opens_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_opens_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       materials: {
         Row: {
           created_at: string
@@ -400,6 +439,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_students: {
+        Args: never
+        Returns: {
+          email: string
+          full_name: string
+          user_id: string
+        }[]
+      }
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {

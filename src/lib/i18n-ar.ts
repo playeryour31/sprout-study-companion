@@ -395,4 +395,11 @@ export const ar: Record<string, string> = {
   "No lesson files yet. Upload them from the Subjects tab.": "لا توجد ملفات دروس بعد. ارفعها من تبويب المواد.",
   "{n} file": "ملف واحد",
   "{n} files": "{n} ملفات",
+  "File stats": "إحصاءات الملفات",
+  "Who opened lesson files": "مين فتح ملفات الدروس",
+  "{n} students signed up. Opens are counted when a student taps a file in the schedule.": "عدد الطلاب المسجلين: {n}. بيتحسب الفتح لما الطالب يدوس على الملف من الجدول.",
+  "No schedule items have files attached yet.": "مفيش مواعيد في الجدول عليها ملفات لسه.",
+  "{a} of {b} students opened a file": "{a} من {b} طالب فتحوا ملف",
+  "No students yet.": "مفيش طلاب لسه.",
+  "Not opened": "لم يفتحه",
 };

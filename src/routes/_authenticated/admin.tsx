@@ -7,6 +7,7 @@ import { SubjectsAdmin } from "@/components/admin/SubjectsAdmin";
 import { QuizzesAdmin } from "@/components/admin/QuizzesAdmin";
 import { EventsAdmin } from "@/components/admin/EventsAdmin";
 import { AnnouncementsAdmin } from "@/components/admin/AnnouncementsAdmin";
+import { FileStatsAdmin } from "@/components/admin/FileStatsAdmin";
 import { AdminsAdmin } from "@/components/admin/AdminsAdmin";
 import { useI18n } from "@/lib/i18n";
 
@@ -50,6 +51,7 @@ function AdminPage() {
           <TabsTrigger value="subjects">{t("Subjects & files")}</TabsTrigger>
           <TabsTrigger value="quizzes">{t("Quizzes")}</TabsTrigger>
           <TabsTrigger value="schedule">{t("Schedule")}</TabsTrigger>
+          <TabsTrigger value="stats">{t("File stats")}</TabsTrigger>
           <TabsTrigger value="news">{t("Announcements")}</TabsTrigger>
           <TabsTrigger value="admins">{t("Admins")}</TabsTrigger>
         </TabsList>
@@ -57,6 +59,7 @@ function AdminPage() {
           <TabsContent value="subjects" className="mt-6"><SubjectsAdmin /></TabsContent>
           <TabsContent value="quizzes" className="mt-6"><QuizzesAdmin /></TabsContent>
           <TabsContent value="schedule" className="mt-6"><EventsAdmin /></TabsContent>
+          <TabsContent value="stats" className="mt-6"><FileStatsAdmin /></TabsContent>
           <TabsContent value="news" className="mt-6"><AnnouncementsAdmin /></TabsContent>
           <TabsContent value="admins" className="mt-6"><AdminsAdmin myEmail={user.email ?? ""} /></TabsContent>
         </Suspense>
