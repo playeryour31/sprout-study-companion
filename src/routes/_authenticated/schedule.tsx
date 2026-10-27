@@ -1,11 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
+import { ChevronLeft, ChevronRight, MapPin, Paperclip } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 import type { EventType } from "@/lib/data";
-import { eventsQuery, subjectsQuery } from "@/lib/content";
+import { eventsQuery, formatSize, materialUrl, subjectsQuery } from "@/lib/content";
 import { cn } from "@/lib/utils";
-import { useI18n } from "@/lib/i18n";
+import { translate, useI18n } from "@/lib/i18n";
+
+async function openFile(path: string) {
+  const win = window.open("", "_blank");
+  try {
+    const url = await materialUrl(path);
+    if (win) win.location.href = url;
+    else window.location.href = url;
+  } catch {
+    win?.close();
+    toast.error(translate("Couldn't open this file. Try again."));
+  }
+}
 
 export const Route = createFileRoute("/_authenticated/schedule")({
   head: () => ({
@@ -146,6 +159,17 @@ function SchedulePage() {
                   <span>{e.start === e.end ? t("Due {time}", { time: e.end }) : `${e.start} – ${e.end}`}</span>
                   {e.location && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{e.location}</span>}
                 </div>
+                {e.materials.length > 0 && (
+                  <div className="mt-3 space-y-1.5 border-t pt-3">
+                    {e.materials.map((m) => (
+                      <button key={m.id} onClick={() => openFile(m.file_path)} className="flex w-full items-center gap-2 rounded-lg bg-secondary/60 px-3 py-2 text-start text-sm hover:bg-secondary">
+                        <Paperclip className="h-4 w-4 shrink-0 text-primary" />
+                        <span className="min-w-0 flex-1 truncate font-medium">{m.title}</span>
+                        <span className="text-[11px] text-muted-foreground">{formatSize(m.size_bytes)}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

@@ -391,4 +391,8 @@ export const ar: Record<string, string> = {
   "Invalid announcement.": "إعلان غير صالح.",
   "Invalid subscription.": "اشتراك غير صالح.",
   "Push notifications are not configured.": "إشعارات الموبايل غير مفعّلة بعد.",
+  "Lesson files": "ملفات الدرس",
+  "No lesson files yet. Upload them from the Subjects tab.": "لا توجد ملفات دروس بعد. ارفعها من تبويب المواد.",
+  "{n} file": "ملف واحد",
+  "{n} files": "{n} ملفات",
 };
