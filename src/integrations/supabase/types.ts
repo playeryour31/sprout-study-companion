@@ -90,6 +90,39 @@ export type Database = {
           },
         ]
       }
+      event_materials: {
+        Row: {
+          created_at: string
+          event_id: string
+          material_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          material_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          material_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_materials_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_materials_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           created_at: string
