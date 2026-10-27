@@ -43,6 +43,13 @@
       "when": 1793060542622,
       "tag": "0005_event_materials",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793060917367,
+      "tag": "0006_material_opens_stats",
+      "breakpoints": true
     }
   ]
 }
