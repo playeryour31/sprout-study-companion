@@ -63,40 +63,42 @@ function Dashboard() {
   const nextQuiz = quizzes.find((q) => !progress.attempts.some((a) => a.quiz_id === q.id)) ?? quizzes[0];
 
   const stats = [
-    { label: t("Study streak"), value: tn(streak.current, "{n} day", "{n} days"), icon: Flame },
-    { label: t("Avg. quiz score"), value: avg === null ? "—" : `${avg}%`, icon: Trophy },
-    { label: t("Lessons completed"), value: String(progress.lessons.length), icon: BookCheck },
-    { label: t("Quizzes done"), value: String(progress.attempts.length), icon: ListChecks },
+    { label: t("Study streak"), value: tn(streak.current, "{n} day", "{n} days"), icon: Flame, tint: "bg-tint-amber text-warning" },
+    { label: t("Avg. quiz score"), value: avg === null ? "—" : `${avg}%`, icon: Trophy, tint: "bg-tint-blue text-primary-glow" },
+    { label: t("Lessons completed"), value: String(progress.lessons.length), icon: BookCheck, tint: "bg-tint-green text-success" },
+    { label: t("Quizzes done"), value: String(progress.attempts.length), icon: ListChecks, tint: "bg-tint-rose text-destructive" },
   ];
 
   return (
-    <div className="space-y-8 fade-up">
-      <section className="relative overflow-hidden rounded-3xl bg-hero p-6 text-primary-foreground md:p-10">
+    <div className="space-y-10 fade-up">
+      <section className="relative overflow-hidden rounded-3xl bg-hero p-7 text-primary-foreground shadow-elegant md:p-12">
         <p className="text-sm font-medium opacity-80">{t("Welcome back, {name}", { name: firstName ?? "" })}</p>
-        <h1 className="mt-2 max-w-xl text-3xl font-extrabold tracking-tight md:text-4xl">
+        <h1 className="mt-3 max-w-xl text-3xl font-extrabold leading-snug tracking-tight md:text-4xl">
           {todayCount > 0
             ? tn(todayCount, "You have {n} thing on your schedule today.", "You have {n} things on your schedule today.")
             : upcoming.length > 0
               ? t("Next up: {title}.", { title: upcoming[0]!.title })
               : t("Ready to learn something new today?")}
         </h1>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/quizzes" className="inline-flex items-center gap-2 rounded-xl bg-card px-4 py-2.5 text-sm font-semibold text-foreground">
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Link to="/quizzes" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition-transform hover:-translate-y-0.5">
             {t("Practise now")} <ArrowRight className="h-4 w-4 rtl:rotate-180" />
           </Link>
-          <Link to="/schedule" className="inline-flex items-center gap-2 rounded-xl border border-primary-foreground/30 px-4 py-2.5 text-sm font-semibold">
+          <Link to="/schedule" className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-primary-foreground/30 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-primary-foreground/10">
             {t("View schedule")}
           </Link>
         </div>
-        <div className="pointer-events-none absolute -end-16 -top-16 h-64 w-64 rounded-full bg-primary-glow/30 blur-3xl" />
+        <div className="pointer-events-none absolute -end-16 -top-16 h-72 w-72 rounded-full bg-primary-glow/30 blur-3xl" />
       </section>
 
-      <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {stats.map(({ label, value, icon: Icon }) => (
-          <div key={label} className="rounded-2xl bg-card p-5 shadow-card">
-            <Icon className="h-5 w-5 text-primary" />
-            <p className="mt-3 text-2xl font-bold">{value}</p>
-            <p className="text-sm text-muted-foreground">{label}</p>
+      <section className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+        {stats.map(({ label, value, icon: Icon, tint }) => (
+          <div key={label} className="rounded-2xl border bg-card p-5 shadow-card md:p-6">
+            <div className={`grid h-10 w-10 place-items-center rounded-xl ${tint}`}>
+              <Icon className="h-5 w-5" />
+            </div>
+            <p className="mt-4 text-2xl font-bold tabular-nums">{value}</p>
+            <p className="mt-0.5 text-sm text-muted-foreground">{label}</p>
           </div>
         ))}
       </section>

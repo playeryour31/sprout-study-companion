@@ -49,38 +49,29 @@ function Shell({ children }: { children: ReactNode }) {
   }, []);
 
   const links = (
-    <nav className="flex flex-col gap-1">
-      {nav.map(({ to, label, icon: Icon }) => (
-        <Link
-          key={to}
-          to={to}
-          onClick={() => setOpen(false)}
-          className={cn(
-            "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-            isActive(path, to)
-              ? "bg-primary text-primary-foreground shadow-elegant"
-              : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-          )}
-        >
-          <Icon className="h-4.5 w-4.5" />
-          {t(label)}
-        </Link>
-      ))}
-      {isAdmin && (
-        <Link
-          to="/admin"
-          onClick={() => setOpen(false)}
-          className={cn(
-            "mt-2 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-            isActive(path, "/admin")
-              ? "bg-primary text-primary-foreground shadow-elegant"
-              : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-          )}
-        >
-          <ShieldCheck className="h-4.5 w-4.5" />
-          {t("Admin panel")}
-        </Link>
-      )}
+    <nav className="flex flex-col gap-1.5">
+      {[...nav, ...(isAdmin ? [{ to: "/admin", label: "Admin panel", icon: ShieldCheck } as const] : [])].map(({ to, label, icon: Icon }) => {
+        const active = isActive(path, to);
+        return (
+          <Link
+            key={to}
+            to={to}
+            onClick={() => setOpen(false)}
+            aria-current={active ? "page" : undefined}
+            className={cn(
+              "group relative flex items-center gap-3 rounded-xl px-3.5 py-3 text-[15px] font-medium transition-all duration-200",
+              to === "/admin" && "mt-3",
+              active
+                ? "bg-nav-active text-sidebar-accent-foreground"
+                : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+            )}
+          >
+            {active && <span className="absolute inset-y-2 start-0 w-1 rounded-full bg-primary" />}
+            <Icon className={cn("h-5 w-5 transition-colors", active ? "text-primary-glow" : "group-hover:text-primary-glow")} />
+            {t(label)}
+          </Link>
+        );
+      })}
     </nav>
   );
 
@@ -117,14 +108,16 @@ function Shell({ children }: { children: ReactNode }) {
       )}
 
       <div className="lg:ps-64">
-        <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b bg-background/85 px-4 backdrop-blur md:px-8">
-          <button aria-label={t("Open menu")} className="lg:hidden" onClick={() => setOpen(true)}>
+        <header className="sticky top-0 z-20 flex h-16 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur-xl md:px-8">
+          <button aria-label={t("Open menu")} className="grid h-10 w-10 place-items-center rounded-full hover:bg-secondary lg:hidden" onClick={() => setOpen(true)}>
             <Menu className="h-5 w-5" />
           </button>
           <div className="flex-1" />
-          <LanguageToggle />
-          <ThemeToggle />
-          <NotificationBell />
+          <div className="flex items-center gap-1 rounded-full border bg-card/60 p-1 shadow-card">
+            <LanguageToggle />
+            <ThemeToggle />
+            <NotificationBell />
+          </div>
           <UserMenu />
         </header>
         {!online && (
@@ -132,23 +125,27 @@ function Shell({ children }: { children: ReactNode }) {
             <WifiOff className="h-4 w-4" /> {t("You're offline — saved lessons are still available.")}
           </div>
         )}
-        <main className="mx-auto max-w-7xl px-4 py-6 pb-24 md:px-8 lg:pb-10">{children}</main>
+        <main className="mx-auto max-w-6xl px-4 py-6 pb-28 sm:px-6 md:px-10 md:py-10 lg:pb-12">{children}</main>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t bg-card lg:hidden">
-        {nav.filter((n) => (mobileNav as readonly string[]).includes(n.to)).map(({ to, label, icon: Icon }) => (
-          <Link
-            key={to}
-            to={to}
-            className={cn(
-              "flex flex-col items-center gap-1 py-2.5 text-[11px] font-medium",
-              isActive(path, to) ? "text-primary" : "text-muted-foreground",
-            )}
-          >
-            <Icon className="h-5 w-5" />
-            {t(label)}
-          </Link>
-        ))}
+      <nav className="pb-safe fixed inset-x-3 bottom-3 z-30 grid grid-cols-5 rounded-2xl border bg-card/90 p-1 shadow-card backdrop-blur-xl lg:hidden">
+        {nav.filter((n) => (mobileNav as readonly string[]).includes(n.to)).map(({ to, label, icon: Icon }) => {
+          const active = isActive(path, to);
+          return (
+            <Link
+              key={to}
+              to={to}
+              aria-current={active ? "page" : undefined}
+              className={cn(
+                "flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl text-[11px] font-medium transition-colors",
+                active ? "bg-nav-active text-primary" : "text-muted-foreground active:bg-secondary",
+              )}
+            >
+              <Icon className="h-5 w-5" />
+              <span className="truncate">{t(label)}</span>
+            </Link>
+          );
+        })}
       </nav>
     </div>
   );
