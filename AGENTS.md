@@ -22,3 +22,4 @@
 - Schedule alerts are announcements linked to an event (announcements.event_id, cascade delete); their text is built from the event at display/send time so it follows each student's language and time zone.
 - Lesson files attach to schedule events through the event_materials link table (admin-only writes); students open them from the schedule via the same signed URLs as lesson pages.
 - File-open stats: students log opens into material_opens (insert only for files attached to that event); admins read them plus the student list from the admin_students() security-definer function, which refuses non-admins.
+- AI file-engagement insights: admin-only askFileInsights server fn builds the stats dataset server-side (student names only, no emails) and the model answers strictly from it.
