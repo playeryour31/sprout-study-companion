@@ -31,6 +31,7 @@ export type StudyEvent = {
   starts_at: string;
   ends_at: string | null;
   location: string;
+  materials: Material[];
 };
 export type Announcement = {
   id: string;
@@ -72,9 +73,16 @@ export const quizzesQuery = queryOptions({
 export const eventsQuery = queryOptions({
   queryKey: ["events"],
   queryFn: async (): Promise<StudyEvent[]> => {
-    const { data, error } = await supabase.from("events").select("*").order("starts_at");
+    const { data, error } = await supabase
+      .from("events")
+      .select("*, event_materials(material:materials(*))")
+      .order("starts_at");
     if (error) throw error;
-    return data as StudyEvent[];
+    type Row = Omit<StudyEvent, "materials"> & { event_materials: { material: Material | null }[] };
+    return (data as unknown as Row[]).map(({ event_materials, ...e }) => ({
+      ...e,
+      materials: (event_materials ?? []).map((x) => x.material).filter((m): m is Material => !!m),
+    }));
   },
 });
 
