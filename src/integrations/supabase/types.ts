@@ -439,6 +439,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_student_accounts: {
+        Args: never
+        Returns: {
+          avatar_url: string
+          created_at: string
+          email: string
+          email_confirmed_at: string
+          full_name: string
+          last_sign_in_at: string
+          provider: string
+          user_id: string
+        }[]
+      }
       admin_students: {
         Args: never
         Returns: {
