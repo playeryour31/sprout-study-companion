@@ -6,6 +6,7 @@ import { eventsQuery, type Material, type StudyEvent } from "@/lib/content";
 import { translate as tr, useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { Card } from "./shared";
+import { FileInsightsAI } from "./FileInsightsAI";
 
 type Student = { user_id: string; email: string; full_name: string };
 type Open = { user_id: string; event_id: string; material_id: string; opened_at: string };
@@ -29,6 +30,8 @@ export function FileStatsAdmin() {
   const withFiles = events.filter((e) => e.materials.length > 0).reverse();
 
   return (
+    <div className="space-y-6">
+    <FileInsightsAI />
     <Card title="Who opened lesson files">
       <p className="-mt-2 mb-4 text-sm text-muted-foreground">
         {tr("{n} students signed up. Opens are counted when a student taps a file in the schedule.", { n: data.students.length })}
@@ -38,6 +41,7 @@ export function FileStatsAdmin() {
         {withFiles.map((e) => <EventStats key={e.id} event={e} students={data.students} opens={data.opens.filter((o) => o.event_id === e.id)} />)}
       </div>
     </Card>
+    </div>
   );
 }
 
